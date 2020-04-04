@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block content %}
+<div class="jumbotron">
+  <h1>Here is a list of all available stats.</h1>
+  <ul>
+    {% for nlprecord in nlprecords %}
+    <li>
+      <div>
+        <h4>input_text</h4>
+        {{nlprecord.input_text[:-1000]}}
+      </div>
+      <div>
+        <h4>output_text</h4>
+        {{nlprecord.output_text[:-50]}}
+      </div>
+      <div>
+        <h4>created_at</h4>
+        {{nlprecord.created_at}}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
