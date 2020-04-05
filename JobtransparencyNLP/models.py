@@ -19,6 +19,7 @@ class UserRole(db.Model):
 
     id = db.Column(db.Integer,primary_key=True)
     rolename = db.Column(db.String(64),unique=True,index=True)
+    users = db.relationship('User',secondary = 'user_role_as')
 
 class User(db.Model,UserMixin):
     __tablename__ = 'users'
@@ -27,7 +28,7 @@ class User(db.Model,UserMixin):
     email = db.Column(db.String(64),unique=True,index=True)
     username = db.Column(db.String(64),unique=True,index=True)
     password_hash = db.Column(db.String(128))
-    roles = db.relationship("UserRole", secondary=user_role_as)
+    roles = db.relationship('UserRole',secondary = 'user_role_as')
 
 
     def __init__(self,email,username,password):

@@ -1,7 +1,20 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField,ValidationError
+from wtforms import StringField, PasswordField, SubmitField,ValidationError,SelectField
 from wtforms.validators import DataRequired, Email, EqualTo
-from JobtransparencyNLP.models import User
+from JobtransparencyNLP import db
+from JobtransparencyNLP.models import User, UserRole
+
+class RemoveRoles(FlaskForm):
+    Users = SelectField('Users', choices=[])
+    Roles = SelectField('Roles', choices=[])
+    submit = SubmitField('Remove Role from User')
+
+class AssignRoles(FlaskForm):
+
+    Users = SelectField('Users', choices=[])
+    Roles = SelectField('Roles', choices=[])
+    submit = SubmitField('Add Role to User')
+
 
 class LoginForm(FlaskForm):
     email = StringField('Email',validators=[DataRequired(),Email()])

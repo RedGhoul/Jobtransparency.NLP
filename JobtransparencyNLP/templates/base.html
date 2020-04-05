@@ -36,6 +36,12 @@
           >nlpstats</a
         >
         <a class="nav-item nav-link" href="{{ url_for('index') }}">Home</a>
+        <a class="nav-item nav-link" href="{{ url_for('users.assignroles') }}"
+          >Assign Roles</a
+        >
+        <a class="nav-item nav-link" href="{{ url_for('users.removeroles') }}"
+          >Remove Roles</a
+        >
         <a class="nav-item nav-link" href="{{ url_for('users.login') }}"
           >Login</a
         >
@@ -47,7 +53,9 @@
         >
       </div>
     </nav>
-
-    {% block content %} {% endblock %}
+    {% with messages = get_flashed_messages() %} {% if messages %} {% for
+    message in messages %}
+    <div class="alert alert-primary" role="alert">{{ message }}</div>
+    {% endfor %} {% endif %} {% endwith %} {% block content %} {% endblock %}
   </body>
 </html>
