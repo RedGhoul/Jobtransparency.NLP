@@ -1,11 +1,24 @@
 
 from JobtransparencyNLP import db,login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy.orm import relationship
 from flask_login import UserMixin
 import datetime
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
+
+user_role_as = db.Table('user_role_as',
+    db.Column('user_role_id', db.Integer, db.ForeignKey('userroles.id')),
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id'))
+)
+
+class UserRole(db.Model):
+    __tablename__ = 'userroles'
+
+    id = db.Column(db.Integer,primary_key=True)
+    rolename = db.Column(db.String(64),unique=True,index=True)
 
 class User(db.Model,UserMixin):
     __tablename__ = 'users'
@@ -14,6 +27,8 @@ class User(db.Model,UserMixin):
     email = db.Column(db.String(64),unique=True,index=True)
     username = db.Column(db.String(64),unique=True,index=True)
     password_hash = db.Column(db.String(128))
+    roles = db.relationship("UserRole", secondary=user_role_as)
+
 
     def __init__(self,email,username,password):
         self.email = email
