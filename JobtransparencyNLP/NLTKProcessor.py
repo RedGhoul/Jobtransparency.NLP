@@ -74,11 +74,6 @@ def generate_summary(textIn, top_n=5):
     textIn = soup.get_text()
     textIn = textIn.replace("-","")
     textIn = textIn.strip()
-    empty = []
-    listtextIn = sent_tokenize(textIn)
-    for x in listtextIn:
-        empty.append(x)
-    textIn = ". ".join(listtextIn)
     # 1 Create the word frequency table
     freq_table = _create_frequency_table(textIn)
     # 2 Tokenize the sentences
@@ -89,7 +84,6 @@ def generate_summary(textIn, top_n=5):
     threshold = _find_average_score(sentence_scores)
     # 5 Important Algorithm: Generate the summary
     summary = _generate_summary(sentences, sentence_scores, 1.5 * threshold)
-
     return summary
 
     
