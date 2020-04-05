@@ -7,7 +7,7 @@ COPY . /app
 
 RUN pip install -r requirements.txt
 RUN pip install gunicorn
-
+RUN python -m nltk.downloader all
 ENV FLASK_APP=app.py
 EXPOSE 8080
 

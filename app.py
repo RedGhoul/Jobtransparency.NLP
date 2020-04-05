@@ -1,7 +1,5 @@
 from JobtransparencyNLP import app
 from flask import render_template
-import nltk
-nltk.download('all')
 
 @app.route('/')
 def index():
