@@ -1,9 +1,10 @@
+import os
 from flask import Blueprint,render_template, redirect, url_for,flash, request
 from flask_login import login_user,login_required,logout_user,current_user
 from JobtransparencyNLP import db
 from JobtransparencyNLP.models import User, UserRole
 from JobtransparencyNLP.users.forms import RemoveRoles,RegistrationForm,LoginForm,AssignRoles
-from config import SECRET_KEY
+#from config import SECRET_KEY
 users_blueprint = Blueprint('users',__name__, template_folder='templates/users')
 def getUsers():
     UserChoices = []
@@ -104,10 +105,10 @@ def register():
 
         adminRole = UserRole.query.filter_by(rolename='Admin').first()
         superRole = UserRole.query.filter_by(rolename='SuperUser').first()
-        if form.adminkey.data == SECRET_KEY:
+        if form.adminkey.data == os.environ['SECRET_KEY']: #SECRET_KEY:
             user.roles.append(adminRole)
 
-        if form.adminkey.data == SECRET_KEY+"Super":
+        if form.adminkey.data == os.environ['SECRET_KEY']: #SECRET_KEY+"Super":
             user.roles.append(superRole)
 
         db.session.add(user)
