@@ -15,7 +15,7 @@ accesslog = "-"
 # bind = 'unix:%s' % os.path.join(_VAR, 'run/gunicorn.sock')
 bind = '0.0.0.0:8080'
 # workers = 3
-workers = 2
+workers = 4
 
 timeout = 3 * 60  # 3 minutes
 # keepalive = 24 * 60 * 60  # 1 day
