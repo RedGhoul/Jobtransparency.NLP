@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template, redirect, url_for,Flask,request,jsonify
+from flask import jsonify,Blueprint,render_template, redirect, url_for,Flask,request,jsonify
 from flask_login import login_required
 from JobtransparencyNLP import db
 from JobtransparencyNLP.models import ApiStats, nlprecords
@@ -6,20 +6,32 @@ import nltk
 import secrets
 import JobtransparencyNLP.NLTKProcessor as nlpstuff
 import os
+from datetime import datetime, timedelta
+
+def findAllBetweenDates(curDate, pastDate):
+    return nlprecords.query.filter(
+        nlprecords.created_at >= pastDate,
+        nlprecords.created_at < curDate).all()
 
 apistats_blueprint = Blueprint('apistats',__name__, template_folder='templates/apistats')
 
 @apistats_blueprint.route("/GetStats")
-@login_required
 def stats():
-    stats = ApiStats.query.all()
-    return render_template('api_list.html',stats=stats)
+    statsQuery = ApiStats.query.all()
+    stats = []
+    for stat in statsQuery:
+        stats.append(stat.as_dict())
+    return jsonify(stats)
 
-@apistats_blueprint.route("/GetNLPRecords")
-@login_required
+@apistats_blueprint.route("/GetCountsLast10Days")
 def nlpstats():
-    nlp = nlprecords.query.all()
-    return render_template('nlp_list.html',nlprecords=nlp)
+    countsLast10Days = []
+    for dayMinus in range(7):
+        nlp = findAllBetweenDates(datetime.today(),(datetime.today()-timedelta(days=dayMinus+1)))
+        title = "Last " + str(dayMinus + 1)
+        countsLast10Days.append({"title":title,"count":len(nlp)})
+
+    return jsonify(countsLast10Days)
 
 
 @apistats_blueprint.route("/HealthCheck")

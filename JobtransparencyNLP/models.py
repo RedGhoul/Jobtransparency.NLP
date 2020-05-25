@@ -53,6 +53,9 @@ class ApiStats(db.Model):
     def addHit(self):
         self.hit_count += 1
 
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 class nlprecords(db.Model):
     __tablename__ = 'nlprecords'
 

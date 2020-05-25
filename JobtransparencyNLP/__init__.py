@@ -10,9 +10,9 @@ login_manager = LoginManager()
 app = Flask(__name__)
 # Connects our Flask App to our Database
 app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['SQLALCHEMY_DATABASE_URI'] #SQLALCHEMY_DATABASE_URI 
+app.config['SQLALCHEMY_DATABASE_URI'] =  os.environ['SQLALCHEMY_DATABASE_URI']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = os.environ['SECRET_KEY'] #SECRET_KEY #os.environ['SECRET_KEY']
+app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
 
 db = SQLAlchemy(app)
 

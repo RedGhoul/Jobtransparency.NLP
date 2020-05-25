@@ -1,6 +1,142 @@
 {% extends "base.html" %} {% block content %}
+<style>
+  .chart-container {
+    width: 1000px;
+    height: 300px
+  }
+</style>
 <div class="jumbotron">
   <h1>Welcome to Text Classify</h1>
   <p>Serving your NLP Needs</p>
 </div>
+<div class="jumbotron">
+  <div class="chart-container">
+    <canvas id="myChart"></canvas>
+  </div>
+</div>
+<div class="jumbotron">
+  <div class="chart-container">
+    <canvas id="myChart2"></canvas>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"
+  integrity="sha256-T/f7Sju1ZfNNfBh7skWn0idlCBcI3RwdLSS4/I7NQKQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
+  integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+<script>
+  let ctx = document.getElementById('myChart');
+  let labels = [];
+  let graphData = [];
+  axios.get('/stats/GetStats')
+    .then(function (response) {
+      let data = response.data;
+      data.forEach(stat => {
+        labels.push(stat.name);
+        graphData.push(stat.hit_count);
+      });
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+    .then(function () {
+      var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'API Calls',
+            data: graphData,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          title: {
+            display: true,
+            text: 'API Calls - Since Beginning'
+          },
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          }
+        }
+      });
+    });
+
+</script>
+
+<script>
+  let ctx2 = document.getElementById('myChart2');
+  let labels2 = [];
+  let graphData2 = [];
+  axios.get('/stats/GetCountsLast10Days')
+    .then(function (response) {
+      let data = response.data;
+      data.forEach(stat => {
+        labels2.push(stat.title);
+        graphData2.push(stat.count);
+      });
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+    .then(function () {
+
+      var myChart = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+          labels: labels2,
+          datasets: [{
+            label: 'Calls Processed - Last 7 Days',
+            data: graphData2,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          title: {
+            display: true,
+            text: 'Calls Processed - Last 7 Days'
+          },
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          }
+        }
+      });
+    });
+
+</script>
 {% endblock %}

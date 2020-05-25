@@ -14,9 +14,10 @@ accesslog = "-"
 
 # bind = 'unix:%s' % os.path.join(_VAR, 'run/gunicorn.sock')
 bind = '0.0.0.0:8080'
-workers = 3
+# workers = 3
+workers = multiprocessing.cpu_count() * 2 + 1
+
 timeout = 3 * 60  # 3 minutes
-# keepalive = 24 * 60 * 60  # 1 day
+keepalive = 24 * 60 * 60  # 1 day
 
 capture_output = True
-max_requests = 20 #
