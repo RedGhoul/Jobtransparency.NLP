@@ -6,7 +6,7 @@ from flask_login import LoginManager,current_user
 #from config import SECRET_KEY,SQLALCHEMY_DATABASE_URI
 
 login_manager = LoginManager()
-
+# $env:FLASK_APP = "run.py"
 app = Flask(__name__)
 # Connects our Flask App to our Database
 app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
