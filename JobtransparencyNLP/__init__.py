@@ -5,7 +5,7 @@ from flask import Flask,url_for, redirect, render_template, request, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager,current_user
-from config import SECRET_KEY,SQLALCHEMY_DATABASE_URI
+#from config import SECRET_KEY,SQLALCHEMY_DATABASE_URI
 from flask import jsonify
 import json
 login_manager = LoginManager()
