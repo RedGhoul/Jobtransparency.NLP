@@ -25,13 +25,8 @@
   {% endfor %} {% endif %} {% endwith %}
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <ul class="navbar-nav mr-auto">
-      <!-- {% if current_user.is_authenticated %}
-      <a class="nav-item nav-link" href="{{ url_for('index') }}">Stats</a>
-      <a class="nav-item nav-link" href="{{ url_for('apistats.nlpstats') }}">nlpstats</a>
-      {% else %} -->
 
       <a class="nav-item nav-link" href="{{ url_for('index') }}">Home</a>
-      <!-- {% endif %} -->
     </ul>
     <ul class="nav navbar-nav navbar-right">
       {% if current_user.is_authenticated %}
