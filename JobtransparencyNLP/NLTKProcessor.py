@@ -5,17 +5,7 @@ from nltk.stem import PorterStemmer
 from nltk.tokenize import word_tokenize, sent_tokenize
 import numpy as np
 from datetime import datetime
-from elasticsearch import Elasticsearch 
 import os
-
-currentDay = datetime.now().day
-currentMonth = datetime.now().month
-currentYear = datetime.now().year
-indexName = 'jobtranparancy-nlp'+str(currentDay)+str(currentMonth)+str(currentYear)
-E_URL = os.environ['ELASTIC_SEARCH_URL']
-E_U = os.environ['ELASTIC_USERNAME']
-E_P = os.environ['ELASTIC_PASSWORD']
-es=Elasticsearch([E_URL],http_auth=(E_U, E_P))
 
 def read_article(Text):
     text_in = Text.split('. ')
@@ -105,7 +95,6 @@ def generate_summary(textIn):
     if len(summary) == 0:
         summary = sentences[0]
 
-    res=es.index(index=indexName,body={"time":datetime.utcnow(),"textIn":textIn,"summary":summary})
     return summary
 
     

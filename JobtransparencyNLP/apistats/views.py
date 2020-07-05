@@ -6,32 +6,8 @@ import nltk
 import secrets
 import JobtransparencyNLP.NLTKProcessor as nlpstuff
 import os
-from datetime import datetime, timedelta
-
-def findAllBetweenDates(curDate, pastDate):
-    return nlprecords.query.filter(
-        nlprecords.created_at >= pastDate,
-        nlprecords.created_at < curDate).all()
 
 apistats_blueprint = Blueprint('apistats',__name__, template_folder='templates/apistats')
-
-@apistats_blueprint.route("/GetStats")
-def stats():
-    statsQuery = ApiStats.query.all()
-    stats = []
-    for stat in statsQuery:
-        stats.append(stat.as_dict())
-    return jsonify(stats)
-
-@apistats_blueprint.route("/GetCountsLast10Days")
-def nlpstats():
-    countsLast10Days = []
-    for dayMinus in range(7):
-        nlp = findAllBetweenDates(datetime.today(),(datetime.today()-timedelta(days=dayMinus+1)))
-        title = "Last " + str(dayMinus + 1)
-        countsLast10Days.append({"title":title,"count":len(nlp)})
-
-    return jsonify(countsLast10Days)
 
 
 @apistats_blueprint.route("/HealthCheck")
@@ -78,15 +54,3 @@ def extract_summary_from_text():
     db.session.add(nlpr)
     db.session.commit()
     return jsonify({"SummaryText":final})
-    # try:
-    #     authKey = request.json["authKey"]
-    #     if True:
-    #         final = nlpstuff.generate_summary(request.json["textIn"])
-    #         nlprecords = nlprecords(request.json["textIn"],final)
-    #         db.session.add(nlprecords)
-    #         db.session.commit()
-    #         return jsonify({"SummaryText":final})
-    #     else:
-    #         return 'Processing Error Occured',500
-    # except:
-    #     return 'Processing Error Occured',500
