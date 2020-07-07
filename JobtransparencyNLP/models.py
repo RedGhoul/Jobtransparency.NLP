@@ -1,5 +1,6 @@
 
 from JobtransparencyNLP import db,login_manager
+from sqlalchemy import Column, Integer, DateTime
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin
@@ -62,11 +63,12 @@ class nlprecords(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     input_text = db.Column(db.Text)
     output_text = db.Column(db.Text)
-    created_at = db.Column(db.Date, default=datetime.datetime.now())
-    updated_at = db.Column(db.Date, onupdate=datetime.datetime.now())
+    created_at = db.Column(db.DateTime)
+    # updated_at = db.Column(db.DateTime, onupdate=datetime.datetime.utcnow)
 
     def __init__(self,input_text,output_text):
         self.input_text = input_text
         self.output_text = output_text
+        self.created_at = datetime.datetime.utcnow()
 
 
