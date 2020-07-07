@@ -4,7 +4,7 @@ from flask import Flask,url_for, redirect, render_template, request, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager,current_user
-from config import SECRET_KEY,SQLALCHEMY_DATABASE_URI
+#from config import SECRET_KEY,SQLALCHEMY_DATABASE_URI
 from flask import jsonify
 import json
 login_manager = LoginManager()
@@ -13,11 +13,11 @@ login_manager = LoginManager()
 app = Flask(__name__)
 # Connects our Flask App to our Database
 app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
-app.config['SQLALCHEMY_DATABASE_URI'] =  SQLALCHEMY_DATABASE_URI #os.environ['SQLALCHEMY_DATABASE_URI']
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['SQLALCHEMY_DATABASE_URI']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_POOL_SIZE'] = 40
 app.config['SQLALCHEMY_MAX_OVERFLOW'] = 10
-app.config['SECRET_KEY'] = SECRET_KEY #os.environ['SECRET_KEY']
+app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
 
 db = SQLAlchemy(app)
 

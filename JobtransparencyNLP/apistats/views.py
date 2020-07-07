@@ -3,7 +3,7 @@ from flask_login import login_required
 from JobtransparencyNLP import db
 from JobtransparencyNLP.models import ApiStats, nlprecords
 import nltk
-from config import SECRET_KEY,SQLALCHEMY_DATABASE_URI,AUTH_TOKEN
+#from config import SECRET_KEY,SQLALCHEMY_DATABASE_URI,AUTH_TOKEN
 import JobtransparencyNLP.NLTKProcessor as nlpstuff
 import os
 
@@ -27,18 +27,14 @@ def extract_keyphrases_from_text():
 
     try:
         authKey = request.json["authKey"]
-        print("authKey  " + authKey)
-        print("AUTH_TOKEN  " + AUTH_TOKEN)
-        if authKey == AUTH_TOKEN: #os.environ["AUTH_TOKEN"]:
+        if authKey == os.environ["AUTH_TOKEN"]:
             final = nlpstuff.extract_key_phrases_from_text(request.json["textIn"])
-            print("final")
-            print(final)
             nlprecords = nlprecords(request.json["textIn"],final)
             db.session.add(nlprecords)
             db.session.commit()
             return jsonify({"rank_list":final})
         else:
-            return 'Processing Error Occured AUTH_TOKEN',500
+            return 'Processing Error Occured',500
     except:
         return 'Processing Error Occured',500
 
