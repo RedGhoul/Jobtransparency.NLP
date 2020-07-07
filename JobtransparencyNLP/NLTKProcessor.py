@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from rake_nltk import Rake
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
@@ -6,6 +7,22 @@ from nltk.tokenize import word_tokenize, sent_tokenize
 import numpy as np
 from datetime import datetime
 import os
+
+def extract_key_phrases_from_text(TextIn):
+    soup = BeautifulSoup(TextIn)
+    htmlFreeText = soup.get_text()
+    htmlFreeText.replace("-","")
+    htmlFreeText = htmlFreeText.strip()
+    r = Rake()
+    r.extract_keywords_from_text(htmlFreeText)
+    final = []
+    for pair in r.rank_list:
+        newDic = {}
+        newDic["Affinty"] = pair[0]
+        newDic["Text"] = pair[1]
+        final.append(newDic)
+    
+    return final
 
 def read_article(Text):
     text_in = Text.split('. ')
