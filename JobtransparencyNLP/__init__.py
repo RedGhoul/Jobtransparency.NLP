@@ -1,4 +1,7 @@
 import os
+import sentry_sdk
+import json
+from sentry_sdk.integrations.flask import FlaskIntegration
 from datetime import datetime
 from flask import Flask,url_for, redirect, render_template, request, abort
 from flask_sqlalchemy import SQLAlchemy
@@ -6,8 +9,13 @@ from flask_migrate import Migrate
 from flask_login import LoginManager,current_user
 #from config import SECRET_KEY,SQLALCHEMY_DATABASE_URI
 from flask import jsonify
-import json
+
 login_manager = LoginManager()
+
+sentry_sdk.init(
+    dsn="https://8246ad87e5224f86b69f90d588a1e6c7@sentry.experimentsinthedeep2.com/7",
+    integrations=[FlaskIntegration()]
+)
 # $env:FLASK_APP = "app.py"
 #$env:NasaMarsDataBaseUrl="https://api.nasa.gov/insight_weather/?api_key=DEMO_KEY&feedtype=json&ver=1.0"
 app = Flask(__name__)
