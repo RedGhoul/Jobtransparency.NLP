@@ -3,7 +3,6 @@ from flask_login import login_required
 from JobtransparencyNLP import db
 from JobtransparencyNLP.models import ApiStats, nlprecords
 import nltk
-#from config import SECRET_KEY,SQLALCHEMY_DATABASE_URI,AUTH_TOKEN
 import JobtransparencyNLP.NLTKProcessor as nlpstuff
 import os
 
@@ -35,8 +34,6 @@ def extract_keyphrases_from_text():
         return jsonify({"rank_list":final})
     else:
         return 'Processing Error Occured',500
-    # except:
-    #     return 'Processing Error Occured',500
 
 @apistats_blueprint.route("/extract_summary_from_text",methods=["POST"])
 def extract_summary_from_text():

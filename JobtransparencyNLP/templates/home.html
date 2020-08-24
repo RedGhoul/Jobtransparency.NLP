@@ -1,7 +1,50 @@
 {% extends "base.html" %} {% block content %}
-<div class="jumbotron">
+<div class="jumbotron text-center">
   <h1>Welcome to Text Classify</h1>
   <p>Serving your NLP Needs</p>
+</div>
+<div class="jumbotron text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h3>Regsiter to Use</h3>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 text-center">
+      <h4>Summaries Extracted To Date</h4>
+      <h6><b>{{homepage["stats_summary"].hit_count}}</b></h6>
+    </div>
+    <div class="col-sm-6 text-center">
+      <h4>Key Phrases Extracted To Date</h4>
+      <h6><b>{{homepage["stats_keyphrases"].hit_count}}</b></h6>
+    </div>
+  </div>
+</div>
+<div class="jumbotron text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h3>Base URI: https://text-classify-metrics.experimentsinthedeep.com</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 text-center">
+      <h4>Summaries End Point</h4>
+      <h6>Base URI /stats/extract_summary_from_text</h6>
+    </div>
+    <div class="col-sm-6 text-center">
+      <h4>Key Phrases End Point</h4>
+      <h6>Base URI /stats/extract_keyphrases_from_text</h6>
+    </div>
+  </div>
 </div>
 
 {% endblock %}
