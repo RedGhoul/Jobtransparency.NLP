@@ -1,7 +1,7 @@
 import os
-import sentry_sdk
+#import sentry_sdk
 import json
-from sentry_sdk.integrations.flask import FlaskIntegration
+#from sentry_sdk.integrations.flask import FlaskIntegration
 from datetime import datetime
 from flask import Flask,url_for, redirect, render_template, request, abort
 from flask_sqlalchemy import SQLAlchemy
@@ -12,16 +12,16 @@ from flask import jsonify
 
 login_manager = LoginManager()
 
-sentry_sdk.init(
-    dsn="https://8246ad87e5224f86b69f90d588a1e6c7@sentry.experimentsinthedeep2.com/7",
-    integrations=[FlaskIntegration()]
-)
+# sentry_sdk.init(
+#     dsn="https://8246ad87e5224f86b69f90d588a1e6c7@sentry.experimentsinthedeep2.com/7",
+#     integrations=[FlaskIntegration()]
+# )
 # $env:FLASK_APP = "app.py"
 #$env:NasaMarsDataBaseUrl="https://api.nasa.gov/insight_weather/?api_key=DEMO_KEY&feedtype=json&ver=1.0"
 app = Flask(__name__)
 # Connects our Flask App to our Database
 app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['SQLALCHEMY_DATABASE_URI']
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['SECRET_KEY']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_POOL_SIZE'] = 40
 app.config['SQLALCHEMY_MAX_OVERFLOW'] = 10
