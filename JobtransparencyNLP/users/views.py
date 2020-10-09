@@ -4,7 +4,7 @@ from flask_login import login_user,login_required,logout_user,current_user
 from JobtransparencyNLP import db
 from JobtransparencyNLP.models import User, UserRole
 from JobtransparencyNLP.users.forms import RemoveRoles,RegistrationForm,LoginForm,AssignRoles
-#from config import SECRET_KEY
+
 users_blueprint = Blueprint('users',__name__, template_folder='templates/users')
 def getUsers():
     UserChoices = []
@@ -66,14 +66,6 @@ def assignroles():
     flash('You do not have the role to view this page')
     return redirect(url_for('index'))
 
-@users_blueprint.route('/AddRoless', methods=['GET'])
-def addRoless():
-    curUser = User.query.filter_by(email='avaneesab5@gmail.com').first()
-    adminRole = UserRole.query.filter_by(rolename='Admin').first()
-    curUser.roles.append(adminRole)
-    db.session.commit()
-    return redirect(url_for('index'))
-
 @users_blueprint.route('/login', methods=['GET','POST'])
 def login():
 
@@ -102,8 +94,16 @@ def register():
                     username=form.username.data, 
                     password=form.password.data)
 
+        if UserRole.query.count() == 0:
+            adminRole = UserRole(rolename='Admin')
+            superRole = UserRole(rolename='SuperUser')
+            db.session.add(adminRole)
+            db.session.add(superRole)
+            db.session.commit()
+        
         adminRole = UserRole.query.filter_by(rolename='Admin').first()
         superRole = UserRole.query.filter_by(rolename='SuperUser').first()
+
         if form.adminkey.data == os.environ['SECRET_KEY']: #SECRET_KEY:
             user.roles.append(adminRole)
 
@@ -112,7 +112,8 @@ def register():
 
         db.session.add(user)
         db.session.commit()
-        flash('Thanks for registeration')
+        flash('Thanks for Registering')
         return redirect(url_for('users.login'))
+
 
     return render_template('register.html',form=form)

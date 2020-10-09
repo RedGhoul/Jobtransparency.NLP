@@ -22,6 +22,10 @@ class UserRole(db.Model):
     rolename = db.Column(db.String(64),unique=True,index=True)
     users = db.relationship('User',secondary = 'user_role_as')
 
+    def __str__(self):
+        return self.rolename
+    
+
 class User(db.Model,UserMixin):
     __tablename__ = 'users'
 

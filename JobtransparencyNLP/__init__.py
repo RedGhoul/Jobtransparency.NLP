@@ -17,11 +17,10 @@ login_manager = LoginManager()
 #     integrations=[FlaskIntegration()]
 # )
 # $env:FLASK_APP = "app.py"
-#$env:NasaMarsDataBaseUrl="https://api.nasa.gov/insight_weather/?api_key=DEMO_KEY&feedtype=json&ver=1.0"
 app = Flask(__name__)
 # Connects our Flask App to our Database
 app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['SECRET_KEY']
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['SQLALCHEMY_DATABASE_URI']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_POOL_SIZE'] = 40
 app.config['SQLALCHEMY_MAX_OVERFLOW'] = 10
@@ -49,7 +48,7 @@ from flask_admin import Admin
 from JobtransparencyNLP.adminModelViewer import RegModelView, SuperModelView
 from JobtransparencyNLP.models import nlprecords, User, UserRole
 
-admin = Admin(app, name='JobtransparencyNLP Admin', template_mode='bootstrap3')
+admin = Admin(app, name='Admin', template_mode='bootstrap3')
 
 admin.add_view(RegModelView(User, db.session))
 admin.add_view(RegModelView(nlprecords, db.session))

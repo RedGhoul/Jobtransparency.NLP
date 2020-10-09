@@ -46,7 +46,7 @@ def extract_summary_from_text():
         db.session.add(newstats)
         db.session.commit()
 
-    final = nlpstuff.generate_summary(request.json["textIn"])
+    final = nlpstuff.generate_summary(request.json["textIn"]).replace("  "," ")
     nlpr = nlprecords(request.json["textIn"],final)
     db.session.add(nlpr)
     db.session.commit()

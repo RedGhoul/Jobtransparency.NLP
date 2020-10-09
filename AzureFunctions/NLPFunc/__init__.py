@@ -1,5 +1,5 @@
 import logging
-
+import json
 import azure.functions as func
 from bs4 import BeautifulSoup
 from rake_nltk import Rake
@@ -22,12 +22,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     data = req_body.get('data')
 
     if name == "summary":
+        dataGen = {"SummaryText": generate_summary(data)};
         return func.HttpResponse(
-            generate_summary(data))
+            json.dumps(dataGen),status_code=200,mimetype="application/json")
     elif name == "keyphrases":
+        dataGen = {"rank_list":extract_key_phrases_from_text(data)};
         return func.HttpResponse(
-             generate_summary(data),
-             status_code=200
+            json.dumps(dataGen),status_code=200,mimetype="application/json",
         )
     else:
         return func.HttpResponse(
@@ -88,8 +89,10 @@ def _score_sentences(sentences, freqTable) -> dict:
                     sentenceValue[sentence[:10]] += freqTable[wordValue]
                 else:
                     sentenceValue[sentence[:10]] = freqTable[wordValue]
-
-        sentenceValue[sentence[:10]] = sentenceValue[sentence[:10]] #word_count_in_sentence
+        try:
+            sentenceValue[sentence[:10]] = sentenceValue[sentence[:10]] #word_count_in_sentence
+        except:
+            pass
 
     return sentenceValue
 
