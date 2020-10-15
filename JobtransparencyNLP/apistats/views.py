@@ -24,16 +24,13 @@ def extract_keyphrases_from_text():
         db.session.add(newstats)
         db.session.commit()
 
-    #try:
-    authKey = request.json["authKey"]
-    if authKey == os.environ["AUTH_TOKEN"]:
-        final = nlpstuff.extract_key_phrases_from_text(request.json["textIn"])
-        nlprecord = nlprecords(request.json["textIn"],"Amount of keyphrases found " + str(len(final)))
-        db.session.add(nlprecord)
-        db.session.commit()
-        return jsonify({"rank_list":final})
-    else:
-        return 'Processing Error Occured',500
+
+    final = nlpstuff.extract_key_phrases_from_text(request.json["textIn"])
+    nlprecord = nlprecords(request.json["textIn"],"Amount of keyphrases found " + str(len(final)))
+    db.session.add(nlprecord)
+    db.session.commit()
+    return jsonify({"rank_list":final})
+
 
 @apistats_blueprint.route("/extract_summary_from_text",methods=["POST"])
 def extract_summary_from_text():
