@@ -65,10 +65,9 @@ class nlprecords(db.Model):
     __tablename__ = 'nlprecords'
 
     id = db.Column(db.Integer,primary_key=True)
-    input_text = db.Column(db.Text)
-    output_text = db.Column(db.Text)
-    created_at = db.Column(db.DateTime)
-    # updated_at = db.Column(db.DateTime, onupdate=datetime.datetime.utcnow)
+    input_text = db.Column(db.Text,index=True)
+    output_text = db.Column(db.Text,index=True)
+    created_at = db.Column(db.DateTime,index=True)
 
     def __init__(self,input_text,output_text):
         self.input_text = input_text

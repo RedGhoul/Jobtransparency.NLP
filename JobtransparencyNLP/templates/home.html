@@ -15,19 +15,6 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-6 text-center">
-      <h4>Summaries Extracted To Date</h4>
-      <h6><b>{{homepage["stats_summary"].hit_count}}</b></h6>
-    </div>
-    <div class="col-sm-6 text-center">
-      <h4>Key Phrases Extracted To Date</h4>
-      <h6><b>{{homepage["stats_keyphrases"].hit_count}}</b></h6>
-    </div>
-  </div>
-</div>
-
-<div class="container">
-  <div class="row">
-    <div class="col-sm-6 text-center">
       <h4>Summaries End Point</h4>
       <h6>Base URI /stats/extract_summary_from_text</h6>
     </div>
@@ -37,5 +24,40 @@
     </div>
   </div>
 </div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 text-center">
+      <h4>Summaries Extracted To Date</h4>
+      <h6><b>{{homepage["stats_summary"].hit_count}}</b></h6>
+    </div>
+    <div class="col-sm-6 text-center">
+      <h4>Key Phrases Extracted To Date</h4>
+      <h6><b>{{homepage["stats_keyphrases"].hit_count}}</b></h6>
+    </div>
+  </div>
+</div>
+<div style="padding-top:20px;"></div>
+<div class="container">
+ <div class="row">
+    <table class="table text-center">
+      <thead>
+        <tr>
+          <th class="text-center" scope="col">Last X Days</th>
+          <th class="text-center" scope="col">Requests Processed</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for results in homepage["history"] %}
+        <tr>
+          <td class="text-center">{{results[0]}}</td>
+          <td class="text-center">{{results[1]}}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+  
+
 
 {% endblock %}
